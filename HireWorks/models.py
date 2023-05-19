@@ -18,7 +18,7 @@ class Employer(models.Model):
 
 class Job(models.Model):
     job_id = models.IntegerField(primary_key=True)
-    employer_id = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    employer= models.ForeignKey(Employer, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     description = models.TextField()
     salary = models.IntegerField()
@@ -48,11 +48,11 @@ class Candidate(models.Model):
 class Application(models.Model):
     application_id = models.IntegerField(primary_key=True)
     resume = models.CharField(max_length=50)
-    job_id = models.ForeignKey(Job, on_delete=models.CASCADE)
-    candidate_id = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('job_id', 'candidate_id',)
+        unique_together = ('job', 'candidate',)
         db_table = 'applications'
         app_label = 'HireWorks'
     using = 'HireWorks'
