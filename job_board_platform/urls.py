@@ -21,4 +21,8 @@ from HireWorks.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('jobs/', job_list, name='job_list'),
+    path('jobs/location/<str:location>/', search_jobs_by_location),
+    path('jobs/title/<str:title>/', search_jobs_by_title),
+    path('jobs/salary/<str:salary>/', search_jobs_by_salary),
+    path('jobs/salary/<str:min_salary>/<str:max_salary>/', search_jobs_by_salary_range),
 ]
