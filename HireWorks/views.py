@@ -23,6 +23,8 @@ def job_list(request):
         }
         for job in jobs
     ]
+    if(jobs.count() == 0) :
+       job_data ={'message': 'no jobs founded'}
     json_data = json.dumps(job_data, indent=4)
     return HttpResponse(json_data, content_type='application/json')
 
@@ -40,7 +42,8 @@ def search_jobs_by_location(request, location):
         }
         for job in jobs
     ]
-    
+    if(jobs.count() == 0) :
+       job_data ={'message': 'no jobs founded'}
     json_data = json.dumps(job_data, indent=4)
     return HttpResponse(json_data, content_type='application/json')
 
@@ -58,7 +61,8 @@ def search_jobs_by_title(request, title):
         }
         for job in jobs
     ]
-    
+    if(jobs.count() == 0) :
+       job_data ={'message': 'no jobs founded'}
     json_data = json.dumps(job_data, indent=4)
     return HttpResponse(json_data, content_type='application/json')
 
@@ -76,7 +80,8 @@ def search_jobs_by_salary(request, salary):
         }
         for job in jobs
     ]
-    
+    if(jobs.count() == 0) :
+       job_data ={'message': 'no jobs founded'}
     json_data = json.dumps(job_data, indent=4)
     return HttpResponse(json_data, content_type='application/json')
 
@@ -94,7 +99,8 @@ def search_jobs_by_salary_range(request, min_salary,max_salary):
         }
         for job in jobs
     ]
-    
+    if(jobs.count() == 0) :
+       job_data ={'message': 'no jobs founded'}
     json_data = json.dumps(job_data, indent=4)
     return HttpResponse(json_data, content_type='application/json')
 
