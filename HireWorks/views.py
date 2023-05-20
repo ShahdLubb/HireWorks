@@ -4,9 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.defaults import page_not_found
-from HireWorks.models import Job
+from HireWorks.models import Application, Candidate, Job
 from HireWorks.models import Employer
 
 def job_list(request):
@@ -41,6 +41,34 @@ def search_jobs_by_salary_range(request, min_salary,max_salary):
     if request.method == 'GET':
         jobs = Job.objects.using('HireWorks').filter(salary__gte=min_salary,salary__lte=max_salary)
         return jobs_details(jobs)
+    else:
+        return page_not_found(request, exception=Exception('Page not Found'))
+
+@csrf_exempt
+def submit_job_application(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            job_id = data.get('job_id')
+            email = data.get('email')
+            resume = data.get('resume')
+
+            # create the application object
+            job = Job.objects.using("HireWorks").get(job_id=job_id)
+            candidate = Candidate.objects.using("HireWorks").get(email=email)
+            next_application_id = Application.objects.using("HireWorks").all().order_by('-application_id').first().application_id + 1
+            application = Application(application_id=next_application_id,resume=resume, job=job, candidate=candidate)
+
+            # save the application to the database
+            application.save(using='HireWorks')
+
+            # return a success response
+            response_data = {'success': True, 'message': 'Application submitted successfully'}
+            return JsonResponse(response_data)
+        except Exception as e:
+            # return an error response if any exception occurs
+            response_data = {'success': False, 'message': str(e)}
+            return JsonResponse(response_data, status=400)
     else:
         return page_not_found(request, exception=Exception('Page not Found'))
 
