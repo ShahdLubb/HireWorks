@@ -25,4 +25,5 @@ urlpatterns = [
     path('jobs/title/<str:title>/', search_jobs_by_title),
     path('jobs/salary/<str:salary>/', search_jobs_by_salary),
     path('jobs/salary/<str:min_salary>/<str:max_salary>/', search_jobs_by_salary_range),
+    path('jobs/apply/', submit_job_application),
 ]
