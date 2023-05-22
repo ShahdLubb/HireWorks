@@ -1,17 +1,15 @@
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 import datetime
 import json
-from django.http import HttpResponse, JsonResponse
-from django.views.defaults import page_not_found
+from django.http import JsonResponse
 from HireWorks.models import Application, Candidate, Job
-from HireWorks.models import Employer
-from HireWorks.exchange import exchange_amount
 from HireWorks.job_utility import *
+from rest_framework.decorators import api_view
 
+@api_view(['POST'])
 @csrf_exempt
 def submit_job_application(request):
-    if request.method == 'POST':
+    
         try:
             data = json.loads(request.body)
             job_id = data.get('job_id')
@@ -41,7 +39,6 @@ def submit_job_application(request):
             # return an error response if any exception occurs
             response_data = {'success': False, 'message': str(e)}
             return JsonResponse(response_data, status=400)
-    else:
-        return page_not_found(request, exception=Exception('Page not Found'))
+    
 
 
