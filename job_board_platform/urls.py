@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from HireWorks.views import *
+from HireWorks.job_search import *
+from HireWorks.job_listing import *
+from HireWorks.submit_application import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
