@@ -16,13 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from HireWorks.job_search import *
 from HireWorks.job_listing import *
 from HireWorks.submit_application import *
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('jobs/', job_list, name='job_list'),
+    path('jobs/<str:id>', jobApi),
+    path('application/<str:id>',applicaionApi),
     path('jobs/location/<str:location>/', search_jobs_by_location),
     path('jobs/title/<str:title>/', search_jobs_by_title),
     path('jobs/salary/<str:salary>/', search_jobs_by_salary),
